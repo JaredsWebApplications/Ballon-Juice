@@ -4,7 +4,7 @@ function setup() {
 	DeePeeVee = new GenPoint;
 	average = DeePeeVee.getDPV();
 	
-	for(var i = 0; i < 10; i++)
+	for(var i = 0; i < 40; i++)
 	{
 		DeePeeVee = new GenPoint;
 		average[0] = (DeePeeVee.getDPV()[0] + average[0]) / 2;
