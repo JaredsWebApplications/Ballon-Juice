@@ -9,20 +9,21 @@
 *
  *************************************************************************/
 
-class DPV {
-	constructor(x, y, z){
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
-
-	//location of the current cell
-	position() {
-		return [this.x, this.y, this.z];
-	}
-
-    valid() {
-        return (this.x + this.y + this.z) <= 19;
+class Grid {
+    constructor(){
+        this.rows = 40;
+        this.matrix = this.generateMatrix();
+    }
+    generateMatrix(){
+        let matrix = [];
+        for(let i = 0; i < this.rows; ++i){
+            matrix[i] = new Array;
+            for(let j = 0; j < this.rows; ++j){
+                matrix[i][j] = 0;
+            }
+        }
+        return matrix;
     }
 }
 
+let G = new Grid();
