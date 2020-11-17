@@ -1,3 +1,10 @@
+const Carinal = {
+    NORTH: 0, // 1
+    EAST: 1, // 2
+    SOUTH: 2, // 3
+    WEST: 3 // 4
+}
+
 class Cell {
 	/*
      * Returns the dimensions of the cell
@@ -21,6 +28,7 @@ class Cell {
         this.depth = depth;
         // where all the connections fit to
         this.terminals = this.initializeTerminals();
+        this.outDegrees = 0;
 	}
 
     drawToScreen(){
@@ -29,14 +37,16 @@ class Cell {
       */ 
 
       stroke('black');
-      strokeWeight(2);
+      textFont('Georgia');
+      //strokeWeight(2);
       
       let [x1, y1, z1, height, width] = this.dimensions();
       rect(x1, y1, height, width);
 
-      textSize(22);
+      textSize(20);
       fill('white');
-      //text(this.content, x+position+20, y+30);
+      text(this.content, this.bl.x + Math.floor(this.length / 2) - 5, this.bl.y + Math.floor(this.width / 2) + 5);
+      fill('black');
     }
 
     center(){
@@ -81,6 +91,7 @@ class Connector {
 
         let [x1, y1] = position_1.position();
         let [x2, y2] = position_2.position();
+
         let delta = Math.abs(y2 - y1);
 
         this.p1.drawToScreen();

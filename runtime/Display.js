@@ -1,42 +1,37 @@
-const Carinal = {
-    NORTH: 0, // 1
-    EAST: 1, // 2
-    SOUTH: 2, // 3
-    WEST: 3 // 4
-}
-
 function setup() {
-    createCanvas(1000, 1000, WEBGL);
-	//frameRate(60);
+    createCanvas(1000, 1000);
 }
 
 function draw() {
-  //background(250);
-  //normalMaterial();
-  //let translationCoordinate = new DPV(240, 0, 0);
-  //let boxCoordinate = new DPV(70, 70, 70);
+    let container = [
+        new Cell(new DPV(0, 0, 0), "0"),
+        new Cell(new DPV(0, 100, 0), "1"),
+        new Cell(new DPV(100, 100, 0), "2"),
+        new Cell(new DPV(100, 0, 0), "3")
+    ];
 
-  //let [x, y, z] = translationCoordinate.position();
+    //for(let i = 0; i < 4; ++i){
+        //if(i % 2 == 0){
+            //let C = new Connector(container[i], container[i+1]);
+            //C.drawConnection(2, 0);
+        //}
+    //}
 
-  //translate(x, y, z);
-  //push();
-  //rotateZ(frameCount * 0.01);
-  //rotateX(frameCount * 0.01);
-  //rotateY(frameCount * 0.01);
-  //let [a, b, c] = boxCoordinate.position();
-  //box(a, b, c);
-  //pop();
+    let C = new Connector(container[0], container[2]);
+    C.drawConnection(2, 0);
 
-  //let C = new Cell(new DPV(10, 10, 10))
-  //box(70, 70, 70);
-  //line(70, 70, 70, 70);
-  //rect(30, 20, 55, 55);
-  //line(30, 10, 85, 75);
-  //rect(150, 20, 55, 55);
-    let cell_one = new Cell(new DPV(0, 0, 0), "0");
-    let cell_two = new Cell(new DPV(0, 100, 0), "0");
+    let C2 = new Connector(container[1], container[3]);
+    C2.drawConnection(1, 3);
 
-    let C = new Connector(cell_one, cell_two);
-    //alert(C.delta());
-    C.drawConnection(Cardinal.SOUTH, Cardinal.NORTH);
+
+
+    translate(240, 0, 0);
+     push();
+     rotateZ(frameCount * 0.01);
+     rotateX(frameCount * 0.01);
+     rotateY(frameCount * 0.01);
+     torus(70, 20);
+     pop();
+    //cell_three.drawToScreen();
+    //cell_four.drawToScreen();
 }
