@@ -1,0 +1,2 @@
+# Ballon-Juice
+an algorithm to find a path from the Beaux-oeuvres docking pad on Zeus Platform in the upper polar reaches of Jupiter's atmosphere up the webbed Escalante Staircase into the hidden floating Mystitonic para-balloon network and finally, hopefully, to the Mystic Balloon, which (naturally) has a mystic pool of dense orangish vapor and a puddle of mystic balloon juice at the bottom of that pool (according to the ancient Mystitonic tract found in a crypt near Malibu and partially deciphered in 1925)
