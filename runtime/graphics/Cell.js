@@ -13,13 +13,12 @@ class Cell {
       return [this.bl.x, this.bl.y, this.z, this.length, this.width];
     }
 	
-	constructor(bl, content, length=50, width=50, depth=50){
+	constructor(bl, content, length=30, width=30, depth=50){
         /*
          * bl: bottom left coordinate
          * length: how many pixels long the box is
          * width: how many pixels wide the box is
          * both of these are defaulted to 10
-         * state: which color is the cell
         */
         this.bl = bl;
         this.content = content;
@@ -27,9 +26,23 @@ class Cell {
         this.width = width;
         this.depth = depth;
         // where all the connections fit to
-        this.terminals = this.initializeTerminals();
+        //this.terminals = this.initializeTerminals();
         this.outDegrees = 0;
+        //this.label = this.createLabel();
 	}
+
+    createLabel(content, point) {
+        let x = this.bl.x + Math.floor(this.length / 2) - 7;
+        let y = this.bl.y + Math.floor(this.width / 2) + 7;
+
+        let _text;
+        _text = createGraphics(this.length, this.width);
+        _text.fill('black');
+        //_text.textAlign(CENTER);
+        _text.textSize(20);
+        _text.text(this.content, x, y);
+        return _text;
+    }
 
     drawToScreen(){
       /*
@@ -37,17 +50,18 @@ class Cell {
       */ 
 
       stroke('black');
-      textFont('Georgia');
-      //strokeWeight(2);
       
       let [x1, y1, z1, height, width] = this.dimensions();
       rect(x1, y1, height, width);
+      fill('yellow');
 
-      textSize(20);
-      fill('white');
-      text(this.content, this.bl.x + Math.floor(this.length / 2) - 5, this.bl.y + Math.floor(this.width / 2) + 5);
-      fill('black');
+      //texture(this.label);
+      //plane(400, 400);
     }
+
+    //this.clicked = function() {
+        //alert("you clicked me!");
+    //}
 
     center(){
         /*
