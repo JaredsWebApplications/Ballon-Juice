@@ -85,4 +85,15 @@ class BalloonField {
 		console.log((this.index) + " balloons total.");
 	}
 	
+	getBalloon(i) {
+		if(i < this.index)
+		{
+			return new DPV(this.Balloons[i].coordinate[0], this.Balloons[i].coordinate[1], this.Balloons[i].coordinate[2]);
+		}
+		else
+		{
+			return -1;
+		}
+	}
+	
 }
