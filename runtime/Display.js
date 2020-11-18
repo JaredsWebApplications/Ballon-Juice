@@ -1,3 +1,6 @@
+//Number of nodes to add
+var NUMBER_NODES = 40;
+
 function setup() {
 	
 	//Creates a new canvas
@@ -15,7 +18,7 @@ function setup() {
 	displayCell = new Cell(new DPV(0,0,0), "0");
 	
 	//While we're still adding balloons
-	for(var i = 0; i < 40; i++)
+	for(var i = 0; i < NUMBER_NODES; i++)
 	{
 		//If this is not a new point
 		while(!newPoint)
@@ -35,10 +38,14 @@ function setup() {
 				//Initialize a cell to be displayed based on this balloon
 				displayCell[i] = new Cell(Balloons.getBalloon(i), "0");
 				
+				//If we aren't on the first node
 				if(i != 0)
 				{
-					connect[i - 1] = new Connector(displayCell[0], displayCell[i]);
-					connect[i - 1].drawConnection();
+					//Connect the current node to a random existing node
+					connect = new Connector(displayCell[Math.floor((Math.random() * i))], displayCell[Math.floor((Math.random() * i))]);
+					
+					//Draw the connection we just made
+					connect.drawConnection();
 				}
 			}
 			else
@@ -51,13 +58,14 @@ function setup() {
 		newPoint = false;
 	}
 	
-	for(var i = 0; i < 40; i++)
+	//Draws all the circles to the screen
+	for(var i = 0; i < NUMBER_NODES; i++)
 	{
 		displayCell[i].drawToScreen();
 	}
 	
 	//Check which points we have
-	Balloons.outputBalloons();
+	//Balloons.outputBalloons();
 }
 // Function called every frame
 function draw() {
