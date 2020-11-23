@@ -1,43 +1,87 @@
+const Carinal = {
+    NORTH: 0, // 1
+    EAST: 1, // 2
+    SOUTH: 2, // 3
+    WEST: 3 // 4
+}
+
+//Sets the distance squares should be apart from eachother on the grid
+var GRID_DIST_MULT = 70;
+
+//Multiply the position values by this much when generating colors
+var COLOR_MULT = 200;
+//Cool values for COLOR_MULT: 	200 	- Seemingly random
+//								123 	- Easter colors
+//								234 	- Color gradient
+//								0x50 	- Vertical pattern
+//								[char]	- Black & white
+
+var EDGE_RADIUS_CURVE = 250;
+
 class Cell {
 	/*
      * Returns the dimensions of the cell
     */
     dimensions(){
-      return [this.bl.x, this.bl.y, this.z, this.length, this.width];
+      return [this.bl.x, this.bl.y, this.z, this.diameter];
     }
 	
-	constructor(bl, content, length=50, width=50, depth=50){
+	constructor(bl, content, diameter=30, depth=50){
         /*
          * bl: bottom left coordinate
-         * length: how many pixels long the box is
-         * width: how many pixels wide the box is
+         * diameter: how many pixels long the box is
          * both of these are defaulted to 10
-         * state: which color is the cell
         */
-        this.bl = bl;
+		
+        this.bl = bl;	//Stores DPV values of the bottom left coordinate
         this.content = content;
-        this.length = length;
-        this.width = width;
+		this.diameter = diameter;
         this.depth = depth;
         // where all the connections fit to
-        this.terminals = this.initializeTerminals();
+        //this.terminals = this.initializeTerminals();
+        this.outDegrees = 0;
+        //this.label = this.createLabel();
 	}
+
+    createLabel(content, point) {
+        let x = this.bl.x + Math.floor(this.diameter / 2) - 7;
+        let y = this.bl.y + Math.floor(this.diameter / 2) + 7;
+
+        let _text;
+        _text = createGraphics(this.diameter, this.diameter);
+        _text.fill('black');
+        //_text.textAlign(CENTER);
+        _text.textSize(20);
+        _text.text(this.content, x, y);
+        return _text;
+    }
 
     drawToScreen(){
       /*
        * Draw the current square to the screen
       */ 
+	  
+	  let [xpos, ypos, zpos] = this.bl.position();
 
-      stroke('black');
-      strokeWeight(2);
+		//Set the stroke to black
+		stroke('black');
+		
+		//Fill based on this color's position
+		fill(color(xpos*COLOR_MULT % 255,
+				 ypos*COLOR_MULT % 255,
+				 zpos*COLOR_MULT % 255));
       
-      let [x1, y1, z1, height, width] = this.dimensions();
-      rect(x1, y1, height, width);
+      let [x1, y1, z1, diameter] = this.dimensions();
+	  circle(x1*GRID_DIST_MULT, y1*GRID_DIST_MULT, diameter);
+      
 
-      textSize(22);
-      fill('white');
-      //text(this.content, x+position+20, y+30);
+      //texture(this.label);
+      //plane(400, 400);
     }
+
+    //this.clicked = function() {
+        //alert("you clicked me!");
+    //}
 
     center(){
         /*
@@ -45,22 +89,22 @@ class Cell {
         */
 
         return new DPV(
-            Math.floor((this.bl.x + this.length)/2),
-            Math.floor((this.bl.y + this.width)/2),
-            Math.floor((this.bl.z + this.depth)/2)
+            Math.floor((this.bl.x*GRID_DIST_MULT + this.diameter)/2),
+            Math.floor((this.bl.y*GRID_DIST_MULT + this.diameter)/2),
+            Math.floor((this.bl.z*GRID_DIST_MULT + this.depth)/2)
         )
     }
 
     initializeTerminals() {
-        let halfLength = Math.floor(this.length / 2);
-        let halfWidth = Math.floor(this.width / 2);
+        let halfLength = Math.floor(this.diameter / 2);
+        let halfWidth  = Math.floor(this.diameter / 2);
 
         return [
             new DPV(this.bl.x + halfLength, this.bl.y),
 
-            new DPV(this.bl.x + this.length, this.bl.y + halfWidth),
+            new DPV(this.bl.x + this.diameter, this.bl.y + halfWidth),
 
-            new DPV(this.bl.x + halfLength, this.bl.y + this.width),
+            new DPV(this.bl.x + halfLength, this.bl.y + this.diameter),
 
             new DPV(this.bl.x, this.bl.y + halfWidth),
         ]
@@ -75,22 +119,41 @@ class Connector {
         this.p2 = p2;
     }
 
-    drawConnection(a, b) {
-        let position_1 = this.p1.terminals[a];
-        let position_2 = this.p2.terminals[b];
-
-        let [x1, y1] = position_1.position();
-        let [x2, y2] = position_2.position();
-        let delta = Math.abs(y2 - y1);
-
-        this.p1.drawToScreen();
-
-        let begin = new DPV(x1 + Math.floor(this.p1.bl.x / 2), y1, 0);
-        let end = new DPV(x2, y2 , 0);
-
-        line(begin.x, begin.y, end.x, end.y);
-
-        this.p2.drawToScreen();
+    drawConnection() {
+		
+		//Let x, y, z equal the positions returned
+		let [x1, y1, z1] = this.p1.center().position();
+		let [x2, y2, z2] = this.p2.center().position();
+		
+		//Set the color of this wire equal to what the color would be if we were
+		//directly in between these two nodes, and reduce it to get darker colors
+		stroke(color(	((abs(x2-x1)/2 + Math.min(x1, x2))*COLOR_MULT % 255)/1.6,
+						((abs(y2-y1)/2 + Math.min(y1, y2))*COLOR_MULT % 255)/1.6,
+						((abs(z2-z1)/2 + Math.min(z1, z2))*COLOR_MULT % 255)/1.6	));
+		
+		//Update x, y, z to be centered
+		[x1, y1, z1] = [(x1 - 15)*2, (y1 - 15)*2, (z1 - 15)*2];
+		[x2, y2, z2] = [(x2 - 15)*2, (y2 - 15)*2, (z2 - 15)*2];
+		
+		//Don't fill
+		noFill();
+		
+		//Is x/y increasing?
+		let xInc = 1;
+		let yInc = 1;
+		
+		if(x1 < x2)
+		{
+			xInc = -1;
+		}
+		
+		if(y1 < y2)
+		{
+			yInc = -1;
+		}
+		
+		//Output a curve from x1, y1 to x2, y2
+		curve(x1 + xInc*EDGE_RADIUS_CURVE, y1 + yInc*EDGE_RADIUS_CURVE, x1, y1, x2, y2, x2 + xInc*EDGE_RADIUS_CURVE, y2 + yInc*EDGE_RADIUS_CURVE);
     }
 }
 
