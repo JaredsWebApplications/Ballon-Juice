@@ -11,14 +11,18 @@
 
 class DPV {
 	constructor(x, y, z){
-        this.x = x;
-        this.y = y;
-        this.z = z;
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 
 	//location of the current cell
 	position() {
 		return [this.x, this.y, this.z];
 	}
+
+    valid() {
+        return (this.x + this.y + this.z) == 19;
+    }
 }
 

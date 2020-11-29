@@ -39,7 +39,6 @@ class RNG {
 
     generateDPV() {
         let d, p, v, leftover;
-
         d = this.numberInRange(6, 19);
         if(d == 19){
             [p, v] = [0, 0];
@@ -48,8 +47,7 @@ class RNG {
             p = this.numberInRange(0, leftover);
             v = 19 - d - p;
         }
-        return (d + p + v == 19) ? [d, v, p] : [-1, -1, -1];
-
+        return (d + p + v == 19) ? [d, p, v] : [-1, -1, -1];
     }
 
     generateMovement() {
