@@ -10,7 +10,7 @@ class Cell {
      * Returns the dimensions of the cell
     */
     dimensions(){
-      return [this.bl.x, this.bl.y, this.z, this.length, this.width];
+      return [this.bl.x, this.bl.y, this.bl.z, this.length, this.width];
     }
 	
 	constructor(bl, content, length=30, width=30, depth=50){
