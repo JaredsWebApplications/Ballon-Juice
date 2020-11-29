@@ -17,7 +17,6 @@ var COLOR_MULT = 200;
 //								[char]	- Black & white
 
 var EDGE_RADIUS_CURVE = 250;
-
 class Cell {
 	/*
      * Returns the dimensions of the cell
@@ -35,7 +34,7 @@ class Cell {
 		
         this.bl = bl;	//Stores DPV values of the bottom left coordinate
         this.content = content;
-		this.diameter = diameter;
+		    this.diameter = diameter;
         this.depth = depth;
         // where all the connections fit to
         //this.terminals = this.initializeTerminals();
@@ -60,7 +59,6 @@ class Cell {
       /*
        * Draw the current square to the screen
       */ 
-	  
 	  let [xpos, ypos, zpos] = this.bl.position();
 
 		//Set the stroke to black
@@ -73,8 +71,6 @@ class Cell {
       
       let [x1, y1, z1, diameter] = this.dimensions();
 	  circle(x1*GRID_DIST_MULT, y1*GRID_DIST_MULT, diameter - (3*z1));
-      
-
       //texture(this.label);
       //plane(400, 400);
     }
@@ -101,11 +97,8 @@ class Cell {
 
         return [
             new DPV(this.bl.x + halfLength, this.bl.y),
-
             new DPV(this.bl.x + this.diameter, this.bl.y + halfWidth),
-
             new DPV(this.bl.x + halfLength, this.bl.y + this.diameter),
-
             new DPV(this.bl.x, this.bl.y + halfWidth),
         ]
     }

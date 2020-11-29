@@ -39,8 +39,7 @@ class RNG {
 
     generateDPV() {
         let d, p, v, leftover;
-
-        d = this.numberInRange(0, 19);
+        d = this.numberInRange(6, 19);
         if(d == 19){
             [p, v] = [0, 0];
         } else {
@@ -48,8 +47,7 @@ class RNG {
             p = this.numberInRange(0, leftover);
             v = 19 - d - p;
         }
-        return (d + v + p == 19) ? [d, v, p] : [-1, -1, -1];
-
+        return (d + p + v == 19) ? [d, p, v] : [-1, -1, -1];
     }
 
     generateMovement() {
@@ -106,3 +104,13 @@ class RNG {
     }
 }
 
+let rando = new RNG();
+
+for(let i = 0; i < 1000; ++i) {
+    let container = rando.generateDPV();
+    let [x, y, z] = container;
+    if(y > 13){
+        console.log(`Error at index ${i}!!!!!\n`);
+        break;
+    }
+}
