@@ -23,7 +23,7 @@ class Cell {
      * Returns the dimensions of the cell
     */
     dimensions(){
-      return [this.bl.x, this.bl.y, this.z, this.diameter];
+      return [this.bl.x, this.bl.y, this.bl.z, this.diameter];
     }
 	
 	constructor(bl, content, diameter=30, depth=50){
@@ -72,7 +72,7 @@ class Cell {
 				 zpos*COLOR_MULT % 255));
       
       let [x1, y1, z1, diameter] = this.dimensions();
-	  circle(x1*GRID_DIST_MULT, y1*GRID_DIST_MULT, diameter);
+	  circle(x1*GRID_DIST_MULT, y1*GRID_DIST_MULT, diameter - (3*z1));
       
 
       //texture(this.label);
