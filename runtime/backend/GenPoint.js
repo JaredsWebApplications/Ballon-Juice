@@ -12,6 +12,11 @@ class GenPoint
 		this.D = 19 - this.V - this.P;
 	}
 	
+	setToDestination()
+	{
+		[this.D, this.P, this.V] = [3, 13, 3];
+	}
+	
 	//Returns the D, P, and V coordinates in an array
 	getDPV()
 	{	return [this.D, this.P, this.V];	}
