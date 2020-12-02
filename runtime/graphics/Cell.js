@@ -6,7 +6,9 @@ const Carinal = {
 }
 
 //Sets the distance squares should be apart from eachother on the grid
-var GRID_DIST_MULT = 70;
+var GRID_DIST_MULT = 50;
+var X_OFFSET = 30;
+var Y_OFFSET = 1.4*X_OFFSET;
 
 //Multiply the position values by this much when generating colors
 var COLOR_MULT = 200;
@@ -17,13 +19,12 @@ var COLOR_MULT = 200;
 //								[char]	- Black & white
 
 var EDGE_RADIUS_CURVE = 250;
-
 class Cell {
 	/*
      * Returns the dimensions of the cell
     */
     dimensions(){
-      return [this.bl.x, this.bl.y, this.z, this.diameter];
+      return [this.bl.x, this.bl.y, this.bl.z, this.diameter];
     }
 	
 	constructor(bl, content, diameter=30, depth=50){
@@ -35,7 +36,7 @@ class Cell {
 		
         this.bl = bl;	//Stores DPV values of the bottom left coordinate
         this.content = content;
-		this.diameter = diameter;
+		    this.diameter = diameter;
         this.depth = depth;
         // where all the connections fit to
         //this.terminals = this.initializeTerminals();
@@ -60,7 +61,6 @@ class Cell {
       /*
        * Draw the current square to the screen
       */ 
-	  
 	  let [xpos, ypos, zpos] = this.bl.position();
 
 		//Set the stroke to black
@@ -72,9 +72,25 @@ class Cell {
 				 zpos*COLOR_MULT % 255));
       
       let [x1, y1, z1, diameter] = this.dimensions();
-	  circle(x1*GRID_DIST_MULT, y1*GRID_DIST_MULT, diameter);
-      
-
+	  
+	  
+	  if(x1 != 3 || y1 != 13)
+	  {
+		circle(x1*GRID_DIST_MULT + X_OFFSET, y1*GRID_DIST_MULT + Y_OFFSET, diameter - (3*z1));
+		  
+	  }
+	  else
+	  {
+		fill(color(0, 0, 0));
+		triangle((x1)*GRID_DIST_MULT + X_OFFSET, (y1 - .5)*GRID_DIST_MULT + Y_OFFSET,
+			(x1 + .4)*GRID_DIST_MULT + X_OFFSET, (y1 + .25)*GRID_DIST_MULT + Y_OFFSET,
+			(x1 - .4)*GRID_DIST_MULT + X_OFFSET, (y1 + .25)*GRID_DIST_MULT + Y_OFFSET);
+		
+		fill(color(255,255,0));
+		triangle((x1)*GRID_DIST_MULT + X_OFFSET, (y1 + .5)*GRID_DIST_MULT + Y_OFFSET,
+			(x1 - .4)*GRID_DIST_MULT + X_OFFSET, (y1 - .25)*GRID_DIST_MULT + Y_OFFSET,
+			(x1 + .4)*GRID_DIST_MULT + X_OFFSET, (y1 - .25)*GRID_DIST_MULT + Y_OFFSET);
+	  }
       //texture(this.label);
       //plane(400, 400);
     }
@@ -101,11 +117,8 @@ class Cell {
 
         return [
             new DPV(this.bl.x + halfLength, this.bl.y),
-
             new DPV(this.bl.x + this.diameter, this.bl.y + halfWidth),
-
             new DPV(this.bl.x + halfLength, this.bl.y + this.diameter),
-
             new DPV(this.bl.x, this.bl.y + halfWidth),
         ]
     }
@@ -132,8 +145,8 @@ class Connector {
 						((abs(z2-z1)/2 + Math.min(z1, z2))*COLOR_MULT % 255)/1.6	));
 		
 		//Update x, y, z to be centered
-		[x1, y1, z1] = [(x1 - 15)*2, (y1 - 15)*2, (z1 - 15)*2];
-		[x2, y2, z2] = [(x2 - 15)*2, (y2 - 15)*2, (z2 - 15)*2];
+		[x1, y1, z1] = [(x1 - 15)*2 + X_OFFSET, (y1 - 15)*2 + Y_OFFSET, (z1 - 15)*2];
+		[x2, y2, z2] = [(x2 - 15)*2 + X_OFFSET, (y2 - 15)*2 + Y_OFFSET, (z2 - 15)*2];
 		
 		//Don't fill
 		noFill();

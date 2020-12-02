@@ -2,27 +2,19 @@ class GenPoint
 {
 	constructor()
 	{
-		this.D = 0;	//Stores the D coordinate
-		this.P = 0;	//Stores the P coordinate
-		this.V = 0;	//Stores the V coordinate
+		this.V = Math.floor(Math.random() * 8);
 		
-		//While we haven't reached the max value of 19
-		for(let i = 0; i < 19; i++)
-		{
-			//Add 1 to either D, P, or V
-			switch(Math.floor((Math.random() * 3)))
-			{
-				case 0:
-					this.D = this.D + 1;
-					break;
-				case 1:
-					this.P = this.P + 1;
-					break;
-				case 2:
-					this.V = this.V + 1;
-					break;
-			}
-		}
+		if(this.V == 7)
+			this.P = Math.floor(Math.random() * 13);
+		else
+			this.P = Math.floor(Math.random() * 14);
+		
+		this.D = 19 - this.V - this.P;
+	}
+	
+	setToDestination()
+	{
+		[this.D, this.P, this.V] = [3, 13, 3];
 	}
 	
 	//Returns the D, P, and V coordinates in an array

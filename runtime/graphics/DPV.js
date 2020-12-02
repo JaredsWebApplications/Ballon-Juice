@@ -22,7 +22,7 @@ class DPV {
 	}
 
     valid() {
-        return (this.x + this.y + this.z) <= 19;
+        return (this.x + this.y + this.z) == 19;
     }
 }
 
