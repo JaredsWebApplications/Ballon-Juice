@@ -72,7 +72,25 @@ class Cell {
 				 zpos*COLOR_MULT % 255));
       
       let [x1, y1, z1, diameter] = this.dimensions();
-	  circle(x1*GRID_DIST_MULT + X_OFFSET, y1*GRID_DIST_MULT + Y_OFFSET, diameter - (3*z1));
+	  
+	  
+	  if(x1 != 3 || y1 != 13)
+	  {
+		circle(x1*GRID_DIST_MULT + X_OFFSET, y1*GRID_DIST_MULT + Y_OFFSET, diameter - (3*z1));
+		  
+	  }
+	  else
+	  {
+		fill(color(0, 0, 0));
+		triangle((x1)*GRID_DIST_MULT + X_OFFSET, (y1 - .5)*GRID_DIST_MULT + Y_OFFSET,
+			(x1 + .4)*GRID_DIST_MULT + X_OFFSET, (y1 + .25)*GRID_DIST_MULT + Y_OFFSET,
+			(x1 - .4)*GRID_DIST_MULT + X_OFFSET, (y1 + .25)*GRID_DIST_MULT + Y_OFFSET);
+		
+		fill(color(255,255,0));
+		triangle((x1)*GRID_DIST_MULT + X_OFFSET, (y1 + .5)*GRID_DIST_MULT + Y_OFFSET,
+			(x1 - .4)*GRID_DIST_MULT + X_OFFSET, (y1 - .25)*GRID_DIST_MULT + Y_OFFSET,
+			(x1 + .4)*GRID_DIST_MULT + X_OFFSET, (y1 - .25)*GRID_DIST_MULT + Y_OFFSET);
+	  }
       //texture(this.label);
       //plane(400, 400);
     }
