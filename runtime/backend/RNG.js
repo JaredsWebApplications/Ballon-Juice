@@ -103,14 +103,3 @@ class RNG {
         return container;
     }
 }
-
-let rando = new RNG();
-
-for(let i = 0; i < 1000; ++i) {
-    let container = rando.generateDPV();
-    let [x, y, z] = container;
-    if(y > 13){
-        console.log(`Error at index ${i}!!!!!\n`);
-        break;
-    }
-}
