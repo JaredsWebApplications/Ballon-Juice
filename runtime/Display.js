@@ -1,5 +1,6 @@
 //Number of nodes to add
 var NUMBER_NODES = 40;
+let bot;
 
 function setup() {
 	
@@ -12,6 +13,8 @@ function setup() {
 	//Whether or not the point is already added
 	var newPoint = false;
 	var connect = new Connector(0, 0);
+
+    var generator = new RNG();
 	
 	//Create a new collection of balloons
 	Balloons = new BalloonField;
@@ -47,6 +50,24 @@ function setup() {
 		//Reset whether or not this is a new point
 		newPoint = false;
 	}
+
+    var position = generator.numberInRange(2, NUMBER_NODES) 
+    bot = new Bot(Balloons.Balloons[position]);
+    var amount = 0;
+    while(bot.foundDestination == false && amount < 400){
+        bot.moveBotRandomly();
+        if(bot.foundDestination){
+            console.log("found the coordinate!");
+        } else {
+            console.log("did not find the suspect!");
+        }
+        ++amount;
+    }
+
+    if(amount == 400 && bot.foundDestination == false){
+        console.log("no viable connection Jim!");
+    }
+
 	
 	//Generates connection matrix
 	var connectionMatrix = [];
