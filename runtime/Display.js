@@ -4,6 +4,10 @@ let bot;
 
 function setup() {
 	
+	//Ensure we don't have too many nodes
+	if(NUMBER_NODES > 111)
+		NUMBER_NODES = 111;
+	
 	//Creates a new canvas
 	createCanvas(1920, 1080);
 	
@@ -20,7 +24,7 @@ function setup() {
 	Balloons = new BalloonField;
 	displayCell = new Cell(new DPV(0,0,0), "0");
 	
-	//While we're still adding balloons
+	//While we're still adding balloons and we're below the maximum number possible (111)
 	for(var i = 0; i < NUMBER_NODES; i++)
 	{
 		//If this is not a new point
@@ -28,6 +32,15 @@ function setup() {
 		{			
 			//Create a new potential point
 			Point = new GenPoint;
+
+			//Sets the second element equal to the destination location
+			if(i == 0)
+			{
+				while(Point.getDPV() == [3,13,3])
+					Point = new GenPoint;
+			}
+			else if(i == 1)
+				Point.setToDestination();
 
 			//Consider it to be a new point
 			newPoint = true;
@@ -68,7 +81,6 @@ function setup() {
         console.log("no viable connection Jim!");
     }
 
-	
 	//Generates connection matrix
 	var connectionMatrix = [];
 	//Generates connection matrix, and sets the number of connections each element has to 0
@@ -81,7 +93,6 @@ function setup() {
 		}
 	}
 
-	
 	sourceDPV = new DPV(19, 0, 0);
 	let X1 = 0;
 	let Y1 = 0;
@@ -94,12 +105,13 @@ function setup() {
 	{
 		sourceDPV = Balloons.getBalloon(i);
 		
-		for(var j = i + 1; j < NUMBER_NODES; j++)
+		for(var j = 0; j < NUMBER_NODES; j++)
 		{
 			let [X1, Y1, Z1] = Balloons.getBalloon(i).position();
 			let [X2, Y2, Z2] = Balloons.getBalloon(j).position();
 
-			if(	i != j 					   	   						&&
+			if(	//If i != j and we haven't made a connection between i and j
+				i != j && connectionMatrix[i][j] == false			&&
 				//Generate connections by moving all from one value to one other value
 				//C(X, Y, Z) -> C(0, Y + X, Z), Y + X <= 13 || C(0, Y, Z + X) (Z + X <= 7)
 				(	(Y2 == Y1 + X1 && X2 == 0) ||
