@@ -50,12 +50,12 @@ class RNG {
         return (d + p + v == 19) ? [d, p, v] : [-1, -1, -1];
     }
 
-    generateMovement() {
+    generateMovement(container) {
+        // Give the DPV in terms of an array
+
         /*
          * Our goal is to maintain the summation to 19 principle and also to have each coordinate to be greater than or equal to 0
         */
-
-        let container = this.generateDPV();
         let [d, p, v] = container;
         let displacement;
 
