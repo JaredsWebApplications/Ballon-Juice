@@ -3,6 +3,7 @@ class makeBalloons {
 	{
 		this.starValid = false;
 		this.destValid = false;
+        this.pathTaken = [];
 		//Generated potential point where a balloon may be added
 		var Point = new GenPoint;
 		
@@ -75,15 +76,16 @@ class makeBalloons {
 		let X2 = 0;
 		let Y2 = 0;
 		let Z2 = 0;
+        this.Balloons = Balloons;
 		//For every node
 		for(let i = 0; i < NUMBER_NODES; i++)
 		{
-			sourceDPV = Balloons.getBalloon(i);
+			sourceDPV = this.Balloons.getBalloon(i);
 			
 			for(let j = 0; j < NUMBER_NODES; j++)
 			{
-				let [X1, Y1, Z1] = Balloons.getBalloon(i).position();
-				let [X2, Y2, Z2] = Balloons.getBalloon(j).position();
+				let [X1, Y1, Z1] = this.Balloons.getBalloon(i).position();
+				let [X2, Y2, Z2] = this.Balloons.getBalloon(j).position();
 
 				if(	//If i != j and we haven't made a connection between i and j
 					i != j && this.connectionMatrix[i][j] == false			&&
@@ -111,11 +113,13 @@ class makeBalloons {
 						this.destValid = true;
 						
 					this.connectionMatrix[i][j] = true;
-					this.connectionMatrix[j][i] = true;					
+					this.connectionMatrix[j][i] = true;
+
+                    this.Balloons.Balloons[i].outDegree+=1;
+                    this.Balloons.Balloons[j].outDegree+=1;
 				}
 			}
 		}
-        this.Balloons = Balloons;
 	}
 	
 	//Returns whether the current balloon field is valid
@@ -148,11 +152,25 @@ class makeBalloons {
 
     traverseConnnections(index, bot){
         // no outbound nodes or max depth reached
-        if(this.connectionMatrix[index].length == 0 || bot.iterations > 10){
-            console.log("hit a dead end");
+        if(this.connectionMatrix[index].length == 0 || bot.iterations > 20 || bot.foundDestination){
+            if(bot.foundDestination){
+                console.log("hey we did it guys!");
+            } else {
+                console.log("hit a dead end");
+            }
+            //let[d, p, v] = bot.coordinate;
+            //console.log(`Current node with DPV of: (${d}, ${p}, ${v})`);
+
+            for(let i = 0; i < this.pathTaken.length; i++){
+                let [source, destination] = this.pathTaken[i];
+                console.log(`${source.coordinate} --> `);
+                console.log(`\t${destination.coordinate}`);
+            }
+
             // end recursive descent
             return;
         }
+
         // if we move forward, we cannot do that again
 
         // eventual conditions for termination
@@ -162,14 +180,17 @@ class makeBalloons {
         let sourceStream = this.connectionMatrix[index];
         // randomly take a dive
         let selection = Math.floor(Math.random() * sourceStream.length);
-        let node = sourceStream[selection];
+        //let node = this.displayCell[selection];
+        let node = this.Balloons.Balloons[selection];
        //  Balloons[index].moveForward = false;
 
         // we can no longer move forward on this node
         //this.connectionMatrix[index][selection].forward = false;
 
+        this.pathTaken.push(
+            [bot.balloon, node] // the source and the destination
+        )
         bot.updatePosition(node);
-        console.log(bot.coordinate);
         this.traverseConnnections(selection, bot);
     }
 }

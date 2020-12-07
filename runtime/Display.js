@@ -22,7 +22,8 @@ function setup() {
 	makeField.displayConns();
 	//Display all nodes (will appear over the connections)
 	makeField.displayNodes();
-    let bot = new Bot(makeField.connectionMatrix[0]);
+    let origin = makeField.Balloons.Balloons[0];
+    let bot = new Bot(origin);
     makeField.traverseConnnections(0, bot);
 }
 // Function called every frame
