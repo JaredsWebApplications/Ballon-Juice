@@ -163,8 +163,10 @@ class makeBalloons {
 
             for(let i = 0; i < this.pathTaken.length; i++){
                 let [source, destination] = this.pathTaken[i];
-                console.log(`${source.coordinate} --> `);
-                console.log(`\t${destination.coordinate}`);
+                let [alpha, index_initial] = source;
+                let [omega, index_final] = destination;
+                console.log(`${alpha.coordinate} (${index_initial}) --> `);
+                console.log(`\t${omega.coordinate} (${index_final})`);
             }
 
             // end recursive descent
@@ -188,7 +190,8 @@ class makeBalloons {
         //this.connectionMatrix[index][selection].forward = false;
 
         this.pathTaken.push(
-            [bot.balloon, node] // the source and the destination
+            //[bot.balloon, node] // the source and the destination
+            [[bot.balloon, index], [node, selection]] // the source and the destination
         )
         bot.updatePosition(node);
         this.traverseConnnections(selection, bot);
