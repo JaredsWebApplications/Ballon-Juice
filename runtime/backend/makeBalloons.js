@@ -180,17 +180,17 @@ class makeBalloons {
         // - the node in which we reach has no connections
 
         let sourceStream = this.connectionMatrix[index];
-        // randomly take a dive
-        let selection = Math.floor(Math.random() * sourceStream.length);
-        //let node = this.displayCell[selection];
-        let node = this.Balloons.Balloons[selection];
-       //  Balloons[index].moveForward = false;
+        let possibleConnections = [];
 
-        // we can no longer move forward on this node
-        //this.connectionMatrix[index][selection].forward = false;
+        for(let i = 0; i < sourceStream.length; ++i){
+            if(sourceStream[i]){ possibleConnections.push(i); }
+        }
+
+        // randomly take a dive
+        let selection = possibleConnections[Math.floor(Math.random() * possibleConnections.length)];
+        let node = this.Balloons.Balloons[selection];
 
         this.pathTaken.push(
-            //[bot.balloon, node] // the source and the destination
             [[bot.balloon, index], [node, selection]] // the source and the destination
         )
         bot.updatePosition(node);
