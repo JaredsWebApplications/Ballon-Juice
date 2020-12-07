@@ -127,8 +127,10 @@ class makeBalloons {
 	//Displays all of the nodes
 	displayNodes()
 	{
-			//Draws all the circles to the screen if they have a connection
-		for(let i = 0; i < NUMBER_NODES; i++)
+		this.displayCell[0].drawToScreen("SOURCE");
+		this.displayCell[1].drawToScreen("DESTINATION");
+		//Draws all the circles to the screen if they have a connection
+		for(let i = 2; i < NUMBER_NODES; i++)
 			this.displayCell[i].drawToScreen();
 	}
 	

@@ -24,6 +24,7 @@ function setup() {
 	makeField.displayNodes();
     let bot = new Bot(makeField.connectionMatrix[0]);
     makeField.traverseConnnections(0, bot);
+	//bot.displayBot();
 }
 // Function called every frame
 function draw() {

@@ -3,6 +3,7 @@ class Bot {
         // Current DPV value
         this.balloon = coordinate;
         this.coordinate = this.balloon.coordinate;
+		console.log(this.coordinate);
         this.foundDestination = false;
         this.randomGenerator = new RNG();
         this.iterations = 0;
@@ -20,4 +21,10 @@ class Bot {
         this.iterations++;
     }
 
+	displayBot() {
+		let [D, P, V] = this.coordinate;
+		console.log(D + " " + P + " " + V);
+		this.show = new Cell(new DPV(D,P,V), "0");
+		this.show.drawToScreen("BOT");
+	}
 }
