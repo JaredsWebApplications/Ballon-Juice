@@ -115,6 +115,7 @@ class makeBalloons {
 				}
 			}
 		}
+        this.Balloons = Balloons;
 	}
 	
 	//Returns whether the current balloon field is valid
@@ -144,4 +145,31 @@ class makeBalloons {
 				}
 			}
 	}
+
+    traverseConnnections(index, bot){
+        // no outbound nodes or max depth reached
+        if(this.connectionMatrix[index].length == 0 || bot.iterations > 10){
+            console.log("hit a dead end");
+            // end recursive descent
+            return;
+        }
+        // if we move forward, we cannot do that again
+
+        // eventual conditions for termination
+        // - we cannot move forward anymore
+        // - the node in which we reach has no connections
+
+        let sourceStream = this.connectionMatrix[index];
+        // randomly take a dive
+        let selection = Math.floor(Math.random() * sourceStream.length);
+        let node = sourceStream[selection];
+       //  Balloons[index].moveForward = false;
+
+        // we can no longer move forward on this node
+        //this.connectionMatrix[index][selection].forward = false;
+
+        bot.updatePosition(node);
+        console.log(bot.coordinate);
+        this.traverseConnnections(selection, bot);
+    }
 }

@@ -36,12 +36,9 @@ class Cell {
 		
         this.bl = bl;	//Stores DPV values of the bottom left coordinate
         this.content = content;
-		    this.diameter = diameter;
+        this.diameter = diameter;
         this.depth = depth;
-        // where all the connections fit to
-        //this.terminals = this.initializeTerminals();
         this.outDegrees = 0;
-        //this.label = this.createLabel();
 	}
 
     createLabel(content, point) {
@@ -91,13 +88,7 @@ class Cell {
 			(x1 - .4)*GRID_DIST_MULT + X_OFFSET, (y1 - .25)*GRID_DIST_MULT + Y_OFFSET,
 			(x1 + .4)*GRID_DIST_MULT + X_OFFSET, (y1 - .25)*GRID_DIST_MULT + Y_OFFSET);
 	  }
-      //texture(this.label);
-      //plane(400, 400);
     }
-
-    //this.clicked = function() {
-        //alert("you clicked me!");
-    //}
 
     center(){
         /*
@@ -167,6 +158,11 @@ class Connector {
 		
 		//Output a curve from x1, y1 to x2, y2
 		curve(x1 + xInc*EDGE_RADIUS_CURVE, y1 + yInc*EDGE_RADIUS_CURVE, x1, y1, x2, y2, x2 + xInc*EDGE_RADIUS_CURVE, y2 + yInc*EDGE_RADIUS_CURVE);
+
+        // Increase the out degree
+
+        this.p1.outDegrees+=1;
+        this.p2.outDegrees+=1;
     }
 }
 

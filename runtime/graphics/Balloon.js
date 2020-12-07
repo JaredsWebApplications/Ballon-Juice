@@ -13,27 +13,8 @@ class Balloon {
     constructor(coordinate){
         this.coordinate = coordinate;
         this.outDegree = 0;
-        this.connections = this.makeConnections();
-    }
-
-    makeConnections(maxConnections=4) {
-    /*    let container = new Array();
-        let flag = true;
-        while(container.length < maxConnections){
-            let x = this.generator();
-            let y = this.generator();
-            if(x == y){ continue; }
-            let point = new DPV(x, y);
-            for(let i = 0; i < container.length; ++i){
-                if(container[i] == point){
-                    flag = false;
-                    break;
-                }
-            }
-            if(flag){ container.push(point); }
-            flag = true;
-        }
-        return container; */
+        this.moveForward = true;
+        this.moveBack = true;
     }
 }
 
