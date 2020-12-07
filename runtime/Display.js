@@ -1,6 +1,7 @@
 //Number of nodes to add
 var NUMBER_NODES = 40;
 let bot;
+let index = 0;
 
 function setup() {
 	
@@ -25,8 +26,12 @@ function setup() {
     let origin = makeField.Balloons.Balloons[0];
     let bot = new Bot(origin);
     makeField.traverseConnnections(0, bot);
+	frameRate(1);
 }
 // Function called every frame
 function draw() {
-	
+	if(makeField.displayBotMovement(index))
+		index++;
+	else
+		noLoop();
 }

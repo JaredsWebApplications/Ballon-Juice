@@ -149,6 +149,20 @@ class makeBalloons {
 				}
 			}
 	}
+	
+	displayBotMovement(index) {
+		if(index < this.pathTaken.length)
+		{
+			let [source, destination] = this.pathTaken[index];
+			let [alpha, index_initial] = source;
+			let [omega, index_final] = destination;
+			console.log(index_initial + " " + index_final);
+			this.connect = new Connector(this.displayCell[index_initial], this.displayCell[index_final]);
+			this.connect.drawTraversal();
+		}
+		
+		return index < this.pathTaken.length;
+	}
 
     traverseConnnections(index, bot){
         // no outbound nodes or max depth reached
@@ -180,17 +194,17 @@ class makeBalloons {
         // - the node in which we reach has no connections
 
         let sourceStream = this.connectionMatrix[index];
-        let possibleConnections = [];
-
-        for(let i = 0; i < sourceStream.length; ++i){
-            if(sourceStream[i]){ possibleConnections.push(i); }
-        }
-
         // randomly take a dive
-        let selection = possibleConnections[Math.floor(Math.random() * possibleConnections.length)];
+        let selection = Math.floor(Math.random() * sourceStream.length);
+        //let node = this.displayCell[selection];
         let node = this.Balloons.Balloons[selection];
+       //  Balloons[index].moveForward = false;
+
+        // we can no longer move forward on this node
+        //this.connectionMatrix[index][selection].forward = false;
 
         this.pathTaken.push(
+            //[bot.balloon, node] // the source and the destination
             [[bot.balloon, index], [node, selection]] // the source and the destination
         )
         bot.updatePosition(node);

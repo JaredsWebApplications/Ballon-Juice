@@ -164,5 +164,42 @@ class Connector {
         this.p1.outDegrees+=1;
         this.p2.outDegrees+=1;
     }
+	
+	drawTraversal() {
+		//Let x, y, z equal the positions returned
+		let [x1, y1, z1] = this.p1.center().position();
+		let [x2, y2, z2] = this.p2.center().position();
+				
+		//Update x, y, z to be centered
+		[x1, y1, z1] = [(x1 - 15)*2 + X_OFFSET, (y1 - 15)*2 + Y_OFFSET, (z1 - 15)*2];
+		[x2, y2, z2] = [(x2 - 15)*2 + X_OFFSET, (y2 - 15)*2 + Y_OFFSET, (z2 - 15)*2];
+		
+		//Don't fill
+		noFill();
+		
+		//Is x/y increasing?
+		let xInc = 1;
+		let yInc = 1;
+		
+		if(x1 < x2)
+		{
+			xInc = -1;
+		}
+		
+		if(y1 < y2)
+		{
+			yInc = -1;
+		}
+		
+		//Output curve's outline
+		stroke('cyan');
+		strokeWeight(7);
+		curve(x1 + xInc*EDGE_RADIUS_CURVE, y1 + yInc*EDGE_RADIUS_CURVE, x1, y1, x2, y2, x2 + xInc*EDGE_RADIUS_CURVE, y2 + yInc*EDGE_RADIUS_CURVE);
+		
+		//Output a darker portion
+		stroke('black');
+		strokeWeight(4);
+		curve(x1 + xInc*EDGE_RADIUS_CURVE, y1 + yInc*EDGE_RADIUS_CURVE, x1, y1, x2, y2, x2 + xInc*EDGE_RADIUS_CURVE, y2 + yInc*EDGE_RADIUS_CURVE);
+    }
 }
 
