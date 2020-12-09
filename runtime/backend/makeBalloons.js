@@ -172,8 +172,6 @@ class makeBalloons {
             } else {
                 console.log("hit a dead end");
             }
-            //let[d, p, v] = bot.coordinate;
-            //console.log(`Current node with DPV of: (${d}, ${p}, ${v})`);
 
             for(let i = 0; i < this.pathTaken.length; i++){
                 let [source, destination] = this.pathTaken[i];
@@ -194,8 +192,12 @@ class makeBalloons {
         // - the node in which we reach has no connections
 
         let sourceStream = this.connectionMatrix[index];
+        let possibleAvenues = [];
+        for(let i = 0; i < sourceStream.length; ++i){
+            if(sourceStream[i]){ possibleAvenues.push(i); }
+        }
         // randomly take a dive
-        let selection = Math.floor(Math.random() * sourceStream.length);
+        let selection = Math.floor(Math.random() * possibleAvenues.length);
         //let node = this.displayCell[selection];
         let node = this.Balloons.Balloons[selection];
        //  Balloons[index].moveForward = false;
