@@ -1,5 +1,5 @@
 //Number of nodes to add
-var NUMBER_NODES = 8;
+var NUMBER_NODES = 40;
 let bot;
 let index = 0;
 
