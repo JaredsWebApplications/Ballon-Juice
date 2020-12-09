@@ -119,7 +119,7 @@ class makeBalloons {
                     this.Balloons.Balloons[j].outDegree+=1;
 				}
 			}
-			this.copyMatrix = this.connectionMatrix;
+			this.copyMatrix = this.connectionMatrix.map(function(arr) {return arr.slice();});
 		}
 	}
 	
@@ -156,15 +156,14 @@ class makeBalloons {
 			}
 	}
 	
-	displayBotMovement(index) {
+	displayBotMovement(index, increasing) {
 		if(index < this.pathTaken.length)
 		{
 			let [source, destination] = this.pathTaken[index];
 			let [alpha, index_initial] = source;
 			let [omega, index_final] = destination;
-			console.log(index_initial + " " + index_final);
 			this.connect = new Connector(this.displayCell[index_initial], this.displayCell[index_final]);
-			this.connect.drawTraversal();
+			this.connect.drawTraversal(increasing);
 		}
 		
 		return index < this.pathTaken.length;
@@ -173,11 +172,6 @@ class makeBalloons {
     traverseConnnections(index, bot){
         // no outbound nodes or max depth reached
         if(this.connectionMatrix[index].length == 0 || bot.iterations > 20 || bot.foundDestination){
-            if(bot.foundDestination){
-                console.log("hey we did it guys!");
-            } else {
-                console.log("hit a dead end");
-            }
             //let[d, p, v] = bot.coordinate;
             //console.log(`Current node with DPV of: (${d}, ${p}, ${v})`);
 
@@ -185,8 +179,6 @@ class makeBalloons {
                 let [source, destination] = this.pathTaken[i];
                 let [alpha, index_initial] = source;
                 let [omega, index_final] = destination;
-                console.log(`${alpha.coordinate} (${index_initial}) --> `);
-                console.log(`\t${omega.coordinate} (${index_final})`);
             }
 
             // end recursive descent
@@ -206,17 +198,22 @@ class makeBalloons {
 			if(this.copyMatrix[index][j] == true)
 				sourceStream.push(j);
 		
-        let selection = sourceStream[Math.floor(Math.random() * sourceStream.length)];
+		if(sourceStream.length != 0)
+		{
+			let selection = sourceStream[Math.floor(Math.random() * sourceStream.length)];
+				this.copyMatrix[index][selection] = false;
+				this.copyMatrix[selection][index] = false;
+			let node = this.Balloons.Balloons[selection];
 		
-		this.copyMatrix[index][selection] = false;
-        let node = this.Balloons.Balloons[selection];
 
-
-        this.pathTaken.push(
-            //[bot.balloon, node] // the source and the destination
-            [[bot.balloon, index], [node, selection]] // the source and the destination
-        )
-        bot.updatePosition(node);
-        this.traverseConnnections(selection, bot);
+			this.pathTaken.push(
+				//[bot.balloon, node] // the source and the destination
+				[[bot.balloon, index], [node, selection]] // the source and the destination
+			)
+			bot.updatePosition(node);
+			this.traverseConnnections(selection, bot);
+		}
+		else
+			console.log("unlucky");
     }
 }
