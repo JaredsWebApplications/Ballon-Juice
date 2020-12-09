@@ -170,64 +170,52 @@ class makeBalloons {
 		return index < this.pathTaken.length;
 	}
 
-    traverseConnnections(index, bot){
-        // no outbound nodes or max depth reached
-        if(this.connectionMatrix[index].length == 0 || bot.iterations > 20 || bot.foundDestination){
-            if(bot.foundDestination){
-                console.log("hey we did it guys!");
-            } else {
-                console.log("hit a dead end");
-            }
-            //let[d, p, v] = bot.coordinate;
-            //console.log(`Current node with DPV of: (${d}, ${p}, ${v})`);
+        traverseConnnections(index, bot){
+            // no outbound nodes or max depth reached
+            if(this.connectionMatrix[index].length == 0 || bot.iterations > 20 || bot.foundDestination){
+                //let[d, p, v] = bot.coordinate;
+                //console.log(`Current node with DPV of: (${d}, ${p}, ${v})`);
 
-            for(let i = 0; i < this.pathTaken.length; i++){
-                let [source, destination] = this.pathTaken[i];
-                let [alpha, index_initial] = source;
-                let [omega, index_final] = destination;
-                console.log(`${alpha.coordinate} (${index_initial}) --> `);
-                console.log(`\t${omega.coordinate} (${index_final})`);
+                for(let i = 0; i < this.pathTaken.length; i++){
+                    let [source, destination] = this.pathTaken[i];
+                    let [alpha, index_initial] = source;
+                    let [omega, index_final] = destination;
+                }
+
+                // end recursive descent
+                return;
             }
 
-            // end recursive descent
-            return;
-        }
+            // if we move forward, we cannot do that again
 
-        // if we move forward, we cannot do that again
+            // eventual conditions for termination
+            // - we cannot move forward anymore
+            // - the node in which we reach has no connections
 
-        // eventual conditions for termination
-        // - we cannot move forward anymore
-        // - the node in which we reach has no connections
+            
+            var sourceStream = [];
+            
+            for(let j = 0; j < 40; j++)
+                if(this.copyMatrix[index][j] == true)
+                    sourceStream.push(j);
+            
+            if(sourceStream.length != 0)
+            {
+                let selection = sourceStream[Math.floor(Math.random() * sourceStream.length)];
+                    this.copyMatrix[index][selection] = false;
+                    this.copyMatrix[selection][index] = false;
+                let node = this.Balloons.Balloons[selection];
+            
 
-        
-		var sourceStream = [];
-		
-<<<<<<< HEAD
-        for(let j = 0; j < 40; j++) {
-            if(this.connectionMatrix[index][j] == true){ sourceStream.push(j); }
-        }
-		
-        // randomly take a dive
-        let selection = sourceStream[Math.floor(Math.random() * sourceStream.length)];
-
-        let node = this.Balloons.Balloons[selection];
-=======
-		for(let j = 0; j < 40; j++)
-			if(this.copyMatrix[index][j] == true)
-				sourceStream.push(j);
-		
-        let selection = sourceStream[Math.floor(Math.random() * sourceStream.length)];
-		
-		this.copyMatrix[index][selection] = false;
-        let node = this.Balloons.Balloons[selection];
-
->>>>>>> e7fcc904e4eff0323af2416e92fdeddad66acdb4
-
-        this.pathTaken.push(
-            [[bot.balloon, index], [node, selection]] // the source and the destination
-        )
-        bot.updatePosition(node);
-        this.traverseConnnections(selection, bot);
+                this.pathTaken.push(
+                    //[bot.balloon, node] // the source and the destination
+                    [[bot.balloon, index], [node, selection]] // the source and the destination
+                )
+                bot.updatePosition(node);
+                this.traverseConnnections(selection, bot);
+            }
+            else
+                console.log("unlucky");
     }
 
     floyd(){
