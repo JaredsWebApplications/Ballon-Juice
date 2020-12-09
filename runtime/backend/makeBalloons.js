@@ -119,6 +119,7 @@ class makeBalloons {
                     this.Balloons.Balloons[j].outDegree+=1;
 				}
 			}
+			this.copyMatrix = this.connectionMatrix;
 		}
 	}
 	
@@ -201,6 +202,7 @@ class makeBalloons {
         
 		var sourceStream = [];
 		
+<<<<<<< HEAD
         for(let j = 0; j < 40; j++) {
             if(this.connectionMatrix[index][j] == true){ sourceStream.push(j); }
         }
@@ -209,6 +211,17 @@ class makeBalloons {
         let selection = sourceStream[Math.floor(Math.random() * sourceStream.length)];
 
         let node = this.Balloons.Balloons[selection];
+=======
+		for(let j = 0; j < 40; j++)
+			if(this.copyMatrix[index][j] == true)
+				sourceStream.push(j);
+		
+        let selection = sourceStream[Math.floor(Math.random() * sourceStream.length)];
+		
+		this.copyMatrix[index][selection] = false;
+        let node = this.Balloons.Balloons[selection];
+
+>>>>>>> e7fcc904e4eff0323af2416e92fdeddad66acdb4
 
         this.pathTaken.push(
             [[bot.balloon, index], [node, selection]] // the source and the destination

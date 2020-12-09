@@ -76,5 +76,4 @@ class BalloonField {
 			return -1;
 		}
 	}
-	
 }
