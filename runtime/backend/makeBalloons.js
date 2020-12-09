@@ -201,26 +201,82 @@ class makeBalloons {
         
 		var sourceStream = [];
 		
-		for(let j = 0; j < 40; j++)
-			if(this.connectionMatrix[index][j] == true)
-				sourceStream.push(j);
-			//this.connectionMatrix[index];
+        for(let j = 0; j < 40; j++) {
+            if(this.connectionMatrix[index][j] == true){ sourceStream.push(j); }
+        }
 		
-		console.log(sourceStream);
         // randomly take a dive
         let selection = sourceStream[Math.floor(Math.random() * sourceStream.length)];
-        //let node = this.displayCell[selection];
-        let node = this.Balloons.Balloons[selection];
-       //  Balloons[index].moveForward = false;
 
-        // we can no longer move forward on this node
-        //this.connectionMatrix[index][selection].forward = false;
+        let node = this.Balloons.Balloons[selection];
 
         this.pathTaken.push(
-            //[bot.balloon, node] // the source and the destination
             [[bot.balloon, index], [node, selection]] // the source and the destination
         )
         bot.updatePosition(node);
         this.traverseConnnections(selection, bot);
+    }
+
+    floyd(){
+        let V = 40;
+
+        let dist = [];
+        let next = [];
+
+        // Set all the weights to infinity
+        for(let i = 0; i < V; ++i){
+            let subarray = [];
+            let nextsubarray = [];
+            for(let j = 0; j < V; ++j){
+                subarray.push(Number.POSITIVE_INFINITY);
+                nextsubarray.push(null);
+            }
+            dist.push(subarray);
+            next.push(nextsubarray)
+        }
+
+        for(let u = 0; u < V; ++u){
+            for(let v = 0; v < V; ++v){
+                // pertains only to the vertexes
+                if(u == v){
+                    dist[v][v] = 0;
+                    next[v][v] = v;
+                } else {
+                    dist[u][v] = this.connectionMatrix[u][v] ? 1 : 0;
+                    next[u][v] = v;
+
+                }
+            }
+        }
+
+        for(let k = 1; k < V; ++k) {
+            for(let i = 1; i < V; ++i) {
+                for(let j = 1; j < V; ++j) {
+
+                    let a = dist[i][k] ? 1 : 0;
+                    let b = dist[k][j] ? 1 : 0;
+
+                    if(dist[i][j] > (a + b)){ 
+                        dist[i][j] = (a + b); 
+                        next[i][j] = next[i][k];
+
+                    }
+                }
+            }
+        }
+        this.distanceMatix = dist;
+        this.nextMatrix = next;
+    }
+    reconstruct(u, v) {
+        if(this.nextMatrix[u][v] == null){
+            return [];
+        }
+        let path = [u];
+        while(u != v){
+            u = this.nextMatrix[u][v];
+            path.push(u);
+        }
+
+        return path;
     }
 }
