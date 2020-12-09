@@ -119,6 +119,7 @@ class makeBalloons {
                     this.Balloons.Balloons[j].outDegree+=1;
 				}
 			}
+			this.copyMatrix = this.connectionMatrix;
 		}
 	}
 	
@@ -202,19 +203,14 @@ class makeBalloons {
 		var sourceStream = [];
 		
 		for(let j = 0; j < 40; j++)
-			if(this.connectionMatrix[index][j] == true)
+			if(this.copyMatrix[index][j] == true)
 				sourceStream.push(j);
-			//this.connectionMatrix[index];
 		
-		console.log(sourceStream);
-        // randomly take a dive
         let selection = sourceStream[Math.floor(Math.random() * sourceStream.length)];
-        //let node = this.displayCell[selection];
+		
+		this.copyMatrix[index][selection] = false;
         let node = this.Balloons.Balloons[selection];
-       //  Balloons[index].moveForward = false;
 
-        // we can no longer move forward on this node
-        //this.connectionMatrix[index][selection].forward = false;
 
         this.pathTaken.push(
             //[bot.balloon, node] // the source and the destination
