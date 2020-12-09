@@ -131,8 +131,13 @@ class makeBalloons {
 	//Displays all of the nodes
 	displayNodes()
 	{
+		if(NUMBER_NODES >= 1)
+			this.displayCell[0].drawToScreen("SOURCE");
+		
+		if(NUMBER_NODES >= 2)
+			this.displayCell[1].drawToScreen("DESTINATION");
 			//Draws all the circles to the screen if they have a connection
-		for(let i = 0; i < NUMBER_NODES; i++)
+		for(let i = 2; i < NUMBER_NODES; i++)
 			this.displayCell[i].drawToScreen();
 	}
 	
@@ -172,6 +177,8 @@ class makeBalloons {
             } else {
                 console.log("hit a dead end");
             }
+            //let[d, p, v] = bot.coordinate;
+            //console.log(`Current node with DPV of: (${d}, ${p}, ${v})`);
 
             for(let i = 0; i < this.pathTaken.length; i++){
                 let [source, destination] = this.pathTaken[i];
@@ -191,13 +198,17 @@ class makeBalloons {
         // - we cannot move forward anymore
         // - the node in which we reach has no connections
 
-        let sourceStream = this.connectionMatrix[index];
-        let possibleAvenues = [];
-        for(let i = 0; i < sourceStream.length; ++i){
-            if(sourceStream[i]){ possibleAvenues.push(i); }
-        }
+        
+		var sourceStream = [];
+		
+		for(let j = 0; j < 40; j++)
+			if(this.connectionMatrix[index][j] == true)
+				sourceStream.push(j);
+			//this.connectionMatrix[index];
+		
+		console.log(sourceStream);
         // randomly take a dive
-        let selection = possibleAvenues[Math.floor(Math.random() * possibleAvenues.length)];
+        let selection = sourceStream[Math.floor(Math.random() * sourceStream.length)];
         //let node = this.displayCell[selection];
         let node = this.Balloons.Balloons[selection];
        //  Balloons[index].moveForward = false;

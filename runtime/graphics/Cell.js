@@ -54,7 +54,7 @@ class Cell {
         return _text;
     }
 
-    drawToScreen(){
+	drawToScreen(type){
       /*
        * Draw the current square to the screen
       */ 
@@ -70,23 +70,40 @@ class Cell {
       
       let [x1, y1, z1, diameter] = this.dimensions();
 	  
-	  
-	  if(x1 != 3 || y1 != 13)
+	  //If this is the first or destination node, make them visually distinct. Otherwise, output the node normally.
+	  switch(type)
 	  {
-		circle(x1*GRID_DIST_MULT + X_OFFSET, y1*GRID_DIST_MULT + Y_OFFSET, diameter - (3*z1));
-		  
-	  }
-	  else
-	  {
-		fill(color(0, 0, 0));
-		triangle((x1)*GRID_DIST_MULT + X_OFFSET, (y1 - .5)*GRID_DIST_MULT + Y_OFFSET,
-			(x1 + .4)*GRID_DIST_MULT + X_OFFSET, (y1 + .25)*GRID_DIST_MULT + Y_OFFSET,
-			(x1 - .4)*GRID_DIST_MULT + X_OFFSET, (y1 + .25)*GRID_DIST_MULT + Y_OFFSET);
-		
-		fill(color(255,255,0));
-		triangle((x1)*GRID_DIST_MULT + X_OFFSET, (y1 + .5)*GRID_DIST_MULT + Y_OFFSET,
-			(x1 - .4)*GRID_DIST_MULT + X_OFFSET, (y1 - .25)*GRID_DIST_MULT + Y_OFFSET,
-			(x1 + .4)*GRID_DIST_MULT + X_OFFSET, (y1 - .25)*GRID_DIST_MULT + Y_OFFSET);
+		case "DESTINATION":
+			fill(color(0, 0, 0));
+			triangle((x1)*GRID_DIST_MULT + X_OFFSET, (y1 - .5)*GRID_DIST_MULT + Y_OFFSET,
+				(x1 + .4)*GRID_DIST_MULT + X_OFFSET, (y1 + .25)*GRID_DIST_MULT + Y_OFFSET,
+				(x1 - .4)*GRID_DIST_MULT + X_OFFSET, (y1 + .25)*GRID_DIST_MULT + Y_OFFSET);
+			
+			fill(color(255,255,0));
+			triangle((x1)*GRID_DIST_MULT + X_OFFSET, (y1 + .5)*GRID_DIST_MULT + Y_OFFSET,
+				(x1 - .4)*GRID_DIST_MULT + X_OFFSET, (y1 - .25)*GRID_DIST_MULT + Y_OFFSET,
+				(x1 + .4)*GRID_DIST_MULT + X_OFFSET, (y1 - .25)*GRID_DIST_MULT + Y_OFFSET);
+			break;
+			
+			case "SOURCE":
+			fill(color(0, 0, 255));
+			triangle((x1)*GRID_DIST_MULT + X_OFFSET, (y1 - .5)*GRID_DIST_MULT + Y_OFFSET,
+				(x1 + .4)*GRID_DIST_MULT + X_OFFSET, (y1 + .25)*GRID_DIST_MULT + Y_OFFSET,
+				(x1 - .4)*GRID_DIST_MULT + X_OFFSET, (y1 + .25)*GRID_DIST_MULT + Y_OFFSET);
+			
+			fill(color(255,255,255));
+			triangle((x1)*GRID_DIST_MULT + X_OFFSET, (y1 + .5)*GRID_DIST_MULT + Y_OFFSET,
+				(x1 - .4)*GRID_DIST_MULT + X_OFFSET, (y1 - .25)*GRID_DIST_MULT + Y_OFFSET,
+				(x1 + .4)*GRID_DIST_MULT + X_OFFSET, (y1 - .25)*GRID_DIST_MULT + Y_OFFSET);
+			break;
+			
+			case "BOT":
+				fill(color(0,0,0));
+				circle(x1*GRID_DIST_MULT + X_OFFSET, y1*GRID_DIST_MULT + Y_OFFSET, diameter - (3*z1));
+			
+			default:
+				circle(x1*GRID_DIST_MULT + X_OFFSET, y1*GRID_DIST_MULT + Y_OFFSET, diameter - (3*z1));
+			break;
 	  }
     }
 
