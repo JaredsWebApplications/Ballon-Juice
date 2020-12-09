@@ -197,7 +197,7 @@ class makeBalloons {
             if(sourceStream[i]){ possibleAvenues.push(i); }
         }
         // randomly take a dive
-        let selection = Math.floor(Math.random() * possibleAvenues.length);
+        let selection = possibleAvenues[Math.floor(Math.random() * possibleAvenues.length)];
         //let node = this.displayCell[selection];
         let node = this.Balloons.Balloons[selection];
        //  Balloons[index].moveForward = false;
