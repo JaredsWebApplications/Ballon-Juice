@@ -25,9 +25,8 @@ function setup() {
 	makeField.displayNodes();
     let origin = makeField.Balloons.Balloons[0];
     let bot = new Bot(origin);
-    makeField.traverseConnnections(0, bot);
-    makeField.floyd();
-    console.log(makeField.reconstruct(0, 1));
+	makeField.floyd();
+    makeField.traverseConnnections(0, bot, makeField.reconstruct(0, 1), 1);
 	frameRate(1);
 }
 

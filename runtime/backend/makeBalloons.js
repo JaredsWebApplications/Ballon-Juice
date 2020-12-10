@@ -168,52 +168,45 @@ class makeBalloons {
 		return index < this.pathTaken.length;
 	}
 
-        traverseConnnections(index, bot){
-            // no outbound nodes or max depth reached
-            if(this.connectionMatrix[index].length == 0 || bot.iterations > 20 || bot.foundDestination){
-                //let[d, p, v] = bot.coordinate;
-                //console.log(`Current node with DPV of: (${d}, ${p}, ${v})`);
+	traverseConnnections(index, bot, pathway, pos)
+	{
+		// no outbound nodes or max depth reached
+		if(this.connectionMatrix[index].length == 0 || bot.iterations > 20 || bot.foundDestination){
+			//let[d, p, v] = bot.coordinate;
+			//console.log(`Current node with DPV of: (${d}, ${p}, ${v})`);
 
-                for(let i = 0; i < this.pathTaken.length; i++){
-                    let [source, destination] = this.pathTaken[i];
-                    let [alpha, index_initial] = source;
-                    let [omega, index_final] = destination;
-                }
+			for(let i = 0; i < this.pathTaken.length; i++){
+				let [source, destination] = this.pathTaken[i];
+				let [alpha, index_initial] = source;
+				let [omega, index_final] = destination;
+			}
 
-                // end recursive descent
-                return;
-            }
+			// end recursive descent
+			return;
+		}
 
-            // if we move forward, we cannot do that again
+		// if we move forward, we cannot do that again
 
-            // eventual conditions for termination
-            // - we cannot move forward anymore
-            // - the node in which we reach has no connections
+		// eventual conditions for termination
+		// - we cannot move forward anymore
+		// - the node in which we reach has no connections
 
-            
-            var sourceStream = [];
-            
-            for(let j = 0; j < 40; j++)
-                if(this.copyMatrix[index][j] == true)
-                    sourceStream.push(j);
-            
-            if(sourceStream.length != 0)
-            {
-                let selection = sourceStream[Math.floor(Math.random() * sourceStream.length)];
-                    this.copyMatrix[index][selection] = false;
-                    this.copyMatrix[selection][index] = false;
-                let node = this.Balloons.Balloons[selection];
-            
+		if(pos < pathway.length)
+		{
+			let selection = pathway[pos++];
+			this.copyMatrix[index][selection] = false;
+			this.copyMatrix[selection][index] = false;
+			let node = this.Balloons.Balloons[selection];
+		
 
-                this.pathTaken.push(
-                    //[bot.balloon, node] // the source and the destination
-                    [[bot.balloon, index], [node, selection]] // the source and the destination
-                )
-                bot.updatePosition(node);
-                this.traverseConnnections(selection, bot);
-            }
-            else
-                console.log("unlucky");
+			this.pathTaken.push(
+				[[bot.balloon, index], [node, selection]] // the source and the destination
+			)
+			bot.updatePosition(node);
+			this.traverseConnnections(selection, bot, pathway, pos);
+		}
+		else
+			console.log("unlucky");
     }
 
     floyd(){
