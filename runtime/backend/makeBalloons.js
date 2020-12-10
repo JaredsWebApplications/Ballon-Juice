@@ -162,11 +162,9 @@ class makeBalloons {
 			let [source, destination] = this.pathTaken[index];
 			let [alpha, index_initial] = source;
 			let [omega, index_final] = destination;
-			console.log(index_initial + " " + index_final);
 			this.connect = new Connector(this.displayCell[index_initial], this.displayCell[index_final]);
-			this.connect.drawTraversal();
+			this.connect.drawTraversal(increasing);
 		}
-		
 		return index < this.pathTaken.length;
 	}
 
@@ -219,6 +217,7 @@ class makeBalloons {
     }
 
     floyd(){
+<<<<<<< HEAD
         let V = 40;
 
         let dist = [];
@@ -253,32 +252,75 @@ class makeBalloons {
         for(let k = 0; k < V; ++k) {
             for(let i = 0; i < V; ++i) {
                 for(let j = 0; j < V; ++j) {
+=======
+        let V = NUMBER_NODES;
 
-                    let a = dist[i][k] ? 1 : 0;
-                    let b = dist[k][j] ? 1 : 0;
+        this.dist = [];
+		this.next = [];
+		
+		for(let u = 0; u < V; u++)
+		{
+			this.next[u] = [];
+			this.dist[u] = [];
+			for(let v = 0; v < V; v++)
+			{
+>>>>>>> 0ef2944a1bccc59bc765ee6771d278698f25e93e
 
-                    if(dist[i][j] > (a + b)){ 
-                        dist[i][j] = (a + b); 
-                        next[i][j] = next[i][k];
+				this.dist[u][v] = Number.POSITIVE_INFINITY;
+				this.next[u][v] = null;
+			}
+		}
+		
+		for(let u = 0; u < V; u++)
+		{
+			for(let v = 0; v < V; v++)
+			{
+				if(this.connectionMatrix[u][v])
+				{
+					this.dist[u][v] = 1;
+					this.next[u][v] = v;
+				}
+			}
+		}
+		
+		for(let v = 0; v < V; v++)
+		{
+			this.dist[v][v] = 0;
+			this.next[v][v] = v;
+		}
 
-                    }
+        for(let k = 0; k < V; k++) {
+            for(let i = 0; i < V; i++) {
+                for(let j = 0; j < V; j++) {
+                    let a = this.dist[i][k];
+                    let b = this.dist[k][j];
+
+                    if(this.dist[i][j] > (a + b))
+					{
+                        this.dist[i][j] = (a + b);
+						this.next[i][j] = this.next[i][k];
+					}
                 }
             }
+<<<<<<< HEAD
         }
         this.distanceMatrix = dist;
         this.nextMatrix = next;
         console.log(dist);
+=======
+        }		
+>>>>>>> 0ef2944a1bccc59bc765ee6771d278698f25e93e
     }
     reconstruct(u, v) {
-        if(this.nextMatrix[u][v] == null){
+        if(this.next[u][v] == null){
             return [];
         }
-        let path = [u];
+        let path = [];
+		path.push(u);
         while(u != v){
-            u = this.nextMatrix[u][v];
+            u = this.next[u][v];
             path.push(u);
         }
-
         return path;
     }
 }

@@ -30,10 +30,23 @@ function setup() {
     makeField.traverseConnnections(0, bot);
 	frameRate(1);
 }
+
+let increasing = true;
+let success = true;
 // Function called every frame
 function draw() {
-    if(makeField.displayBotMovement(index))
-        index++;
-    else
-        noLoop();
+	success = makeField.displayBotMovement(index, increasing);
+	
+	//Travel the whole path, then return on the same path.
+	if(success && increasing)
+		index++;
+	else if(success && !increasing && index > 0)
+		index--;
+	else if(increasing)
+	{
+		increasing = false;
+		index--;
+	}
+	else
+		noLoop();
 }
