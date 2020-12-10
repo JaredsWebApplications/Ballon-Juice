@@ -3,8 +3,8 @@
 \usepackage{mathrsfs,amsmath}
 \usepackage{xcolor}
 \usepackage{titlesec}
-\usepackage{minted}
 \usepackage{mwe}
+\usepackage{graphicx}
 
 \usepackage[margin=1.4in]{geometry}
 
@@ -34,6 +34,8 @@
     urlcolor=black
 }
 
+\graphicspath{ {./assets/} }
+
 \begin{document}
 
 \maketitle
@@ -50,6 +52,113 @@
 
 \section{Introduction}
 
+This project focuses on a mission reconnaissance visualizer, showing a bot retrieve a balloon in a deeply nested balloon field.
+The mission is to traverse from balloon to balloon, leaving markers of where it has been in the process.
+Our bot has a very simple set of instructions and rules it must adhere to.
+Those are as follows:
+
+\begin{enumerate}
+\item The bot must move forward once and cannot repeat such action after the fact. That path is considered dead.
+\item The bot can go backwards and follows the same principle as the rule above.
+\item Teleportation is not permitted
+\item The bot will finally show it's path taken in reverse order, making it's way back to the initial balloon.
+\end{enumerate}
+
+\begin{flushleft}
+In this project, we have the balloon field initialized to an $V \times V$ adjacency matrix, where $V$ is defined as the number of balloons occupying the field (here we have 40).
+\end{flushleft}
+
+\subsection{Floyd-Warshall Algorithm}
+
+The algorithm will find the shortest path given a matrix with weighted edges, where the connection spanning from $u \rightarrow v$ signifies an edge or connection.
+These edge values are then used to find the lengths of said shortest path.
+By design, the algorithm does not attempt to reconstruct the path but in our rendition it does.
+The average running time of this algorithm is $\theta(|V^3|)$.
+
+\newpage
+
+\section{Archive Contents}
+
+\subsection{documentation}
+\begin{itemize}
+\item exported/Balloon-Juice.pdf | PDF rendition of our documentation
+\item Balloon-Juice.tex | LaTeX version of our documentation
+\end{itemize}
+
+\subsection{root}
+
+\begin{itemize}
+\item Display.js | All drawing functionality that is conducted by p5
+\item driver.html | webpage to display all the drawing
+\item README.md | Small readme about the project
+\end{itemize}
+
+\subsection{runtime}
+
+\begin{itemize}
+\item assets/p5.js | this file is considered an import and has been given by Professor Siska
+\item backend/Bot.js | contains logic for the bot that traverses the balloon field (remove randomGenerator)
+\item backend/Grid.js | MARKED FOR REMOVAL
+\item backend/GenPoint.js | randomly generates balloons in the balloon field, ensuring they have proper DPV values
+\item backend/Traversals.js | traversal algorithms that are used by the bot
+\item backend/RNG.js | random number generator class (MARKED FOR REMOVAL)
+\item graphics/Balloon.js | a balloon and balloon field class implementation that controls the graphical movement of the balloons
+\item graphics/Cell.js | a graphical representation of the balloons that get displayed onto the screen
+\item graphics/DPV.js | helps control the logic behind the generation of balloons
+\end{itemize}
+
+\newpage
+
+\section{Installation and Running}
+
+\begin{enumerate}
+\item Extract the .zip file into a folder
+\item Navigate to the driver.html file wih n the folder. Right-click on the file and select “Open”. The p5 program should start immediately. A field of balloons should appear and the algorithm should start displaying the path taken.
+\end{enumerate}
+
+\subsection{Icon Legend}
+
+\begin{center}
+\large \textbf{Starting Node}
+
+\fbox{\includegraphics[width=2cm]{start-node.png}}
+
+\end{center}
+
+\vspace*{7px}
+
+\begin{center}
+\large \textbf{Ending Node}
+
+\fbox{\includegraphics[width=2cm]{start-node.png}}
+
+\end{center}
+
+\section{Known Bugs}
+
+Currently there are no known bugs to exist nor undesired program outcomes.
+
+\section{Testing}
+
+The team has not experience any warnings or ill side effects from running Balloon-Juice.
+
+\newpage
+
+\section{Credits}
+
+\begin{flushleft}
+\textbf{Mason:}
+
+\begin{enumerate}
+\item Something
+\end{enumerate}
+
+\textbf{Jared:}
 
 
+\begin{enumerate}
+\item \href{https://en.wikipedia.org/wiki/Floyd-Warshall_algorithm}{Floyd-Warshall Algorithm}
+\end{enumerate}
+\end{flushleft}
+\item 
 \end{document}

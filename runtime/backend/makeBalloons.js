@@ -243,16 +243,16 @@ class makeBalloons {
                     dist[v][v] = 0;
                     next[v][v] = v;
                 } else {
-                    dist[u][v] = this.connectionMatrix[u][v] ? 1 : 0;
+                    dist[u][v] = (this.connectionMatrix[u][v] == true) ? 1 : 0;
                     next[u][v] = v;
 
                 }
             }
         }
 
-        for(let k = 1; k < V; ++k) {
-            for(let i = 1; i < V; ++i) {
-                for(let j = 1; j < V; ++j) {
+        for(let k = 0; k < V; ++k) {
+            for(let i = 0; i < V; ++i) {
+                for(let j = 0; j < V; ++j) {
 
                     let a = dist[i][k] ? 1 : 0;
                     let b = dist[k][j] ? 1 : 0;
@@ -265,8 +265,9 @@ class makeBalloons {
                 }
             }
         }
-        this.distanceMatix = dist;
+        this.distanceMatrix = dist;
         this.nextMatrix = next;
+        console.log(dist);
     }
     reconstruct(u, v) {
         if(this.nextMatrix[u][v] == null){
