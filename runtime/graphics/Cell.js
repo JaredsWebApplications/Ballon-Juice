@@ -182,7 +182,7 @@ class Connector {
         this.p2.outDegrees+=1;
     }
 	
-	drawTraversal() {
+	drawTraversal(increasing) {
 		//Let x, y, z equal the positions returned
 		let [x1, y1, z1] = this.p1.center().position();
 		let [x2, y2, z2] = this.p2.center().position();
@@ -209,7 +209,10 @@ class Connector {
 		}
 		
 		//Output curve's outline
-		stroke('cyan');
+		if(increasing)
+			stroke('cyan');
+		else
+			stroke('red');
 		strokeWeight(7);
 		curve(x1 + xInc*EDGE_RADIUS_CURVE, y1 + yInc*EDGE_RADIUS_CURVE, x1, y1, x2, y2, x2 + xInc*EDGE_RADIUS_CURVE, y2 + yInc*EDGE_RADIUS_CURVE);
 		
