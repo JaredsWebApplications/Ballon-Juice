@@ -1,3 +1,10 @@
+Precursor Information
+=====================
+
+1.  Members: Mason Godfrey, Jared Dyreson
+
+2.  Class: CS-335, Section 02
+
 Introduction
 ============
 
@@ -42,6 +49,17 @@ documentation
 
 -   Balloon-Juice.tex \| LaTeX version of our documentation
 
+-   Balloon-Juice.txt \| plain text version of our documentation
+    (directly converted from above using pandoc). If viewing in plain
+    text, please consider checking out the PDF for the images to be
+    displayed in line. Otherwise, please navigate to \"assets\" to see
+    them; nomenclature of the file names should be self-explanatory.
+
+-   RuntimeAnalysis.txt \| plain text version of our running time
+    analysis
+
+-   assets/ \| all images pertaining to this documentation piece
+
 root
 ----
 
@@ -49,7 +67,8 @@ root
 
 -   index.html \| webpage to display all the drawing
 
--   README.md \| Small readme about the project
+-   README.md \| Small readme about the project (not related to the one
+    found in the readme)
 
 runtime
 -------
