@@ -57,9 +57,7 @@ root
 
 -   index.html    - webpage to display all the drawing
 
--   README.md - Small readme about the project
-
--   README.txt
+-   README.txt  | this document
 
 -   RuntimeAnalysis.txt  | running time analysis of our project
 
