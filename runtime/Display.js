@@ -4,7 +4,8 @@
 * CREATED BY : JARED DYRESON * jareddyreson@csu.fullerton.edu
 *************************************************************************
 *
-* This file contains the implementation of an RNG class to generate DPV coordinates
+* This file contains the implementation of all visualizations of our bot traversing through
+* the balloon field and output of the Floyd-Warshal algorithm
 *
  *************************************************************************/
 
