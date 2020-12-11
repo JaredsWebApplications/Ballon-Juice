@@ -3,7 +3,6 @@ class Bot {
         // Current DPV value
         this.balloon = coordinate;
         this.foundDestination = false;
-        this.randomGenerator = new RNG();
         this.iterations = 0;
     }
 

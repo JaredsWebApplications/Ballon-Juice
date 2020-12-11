@@ -10,8 +10,6 @@ class makeBalloons {
 		//Whether or not the point is already added
 		var newPoint = false;
 		this.connect = new Connector(0, 0);
-
-		var generator = new RNG();
 		
 		//Create a new collection of balloons
 		let Balloons = new BalloonField;

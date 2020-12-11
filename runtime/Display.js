@@ -1,3 +1,13 @@
+/*************************************************************************
+* * * * * * * * * * * * * *	RNG.JS * * * * * * * * * * * * * * * * * * * *
+**************************************************************************
+* CREATED BY : JARED DYRESON * jareddyreson@csu.fullerton.edu
+*************************************************************************
+*
+* This file contains the implementation of an RNG class to generate DPV coordinates
+*
+ *************************************************************************/
+
 //Number of nodes to add
 var NUMBER_NODES = 40;
 let bot;
