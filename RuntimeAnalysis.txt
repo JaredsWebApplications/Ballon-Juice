@@ -1,0 +1,27 @@
+Since our project contains several different components, the running time of each have been calculated and added to this text file, based on their order of appearance in Display.js. If an operation in Display.js runs in constant time, it will not be discussed.
+
+makeBalloons | initialization
+Most running time in this section is caused by a nested for loop with several if statements inside. This portion is in O(N^2).
+
+makeBalloons | isValid
+Since this function simply returns two booleans, it runs in O(C).
+
+makeBalloons | displayConns
+This function contains a nested for loop, but runs in O(N^2)/2 due to the fact that the inner for loop checks only variables after the first.
+
+makeBalloons | displayNodes
+Since this function only contains a for loop, and the function it calls runs in constant time, displayNodes runs in O(N).
+
+bot | initialization
+The initialization of a bot runs in O(C).
+
+makeBalloons | floyd
+Our Floyd Warshall algorithm contains several for loops; they cause the total run time to be in O(N^2 + N^2 + N + N^3), which simplifies first to O(N^3 + 2N^2 + N), and then to O(N^3).
+
+makeBalloons | traverseConnections, reconstruct
+Reconstruct, which is passed into traverseConnections, runs in O(N). Since traverseConnections is based on Reconstruct, but contains an additional for loop, it runs in O(N^2).
+
+makeBalloons | displayBotMovement
+This runs in O(N), since it does not rely on nested for loops.
+
+Since the longest running time is in O(N^3 + 2.5N^2 + N + C), our program runs in O(N^3).
