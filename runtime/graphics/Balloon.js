@@ -2,19 +2,21 @@
 * * * * * * * * * * * * * *	BALLON.JS * * * * * * * * * * * * * * * * *  *
 **************************************************************************
 * CREATED BY : JARED DYRESON * jareddyreson@csu.fullerton.edu
-*************************************************************************
+*			   MASON GODFREY * mgodfrey@csu.fullerton.edu
+**************************************************************************
 *
-* This file contains the implementation of the point class, which represents
-* Cartesian points on a three dimensional plane
+* This file contains both the implentation for balloons and a collection
+* of balloons (balloonfield). A balloon stores its coordinates,
+* outdegree. A balloonfield can add add balloons to itself, check if
+* their coordinates are valid, output all balloons, and get balloons by
+* index.
 *
- *************************************************************************/
+**************************************************************************/
 
 class Balloon {
     constructor(coordinate){
         this.coordinate = coordinate;
         this.outDegree = 0;
-        this.moveForward = true;
-        this.moveBack = true;
     }
 }
 
@@ -60,20 +62,15 @@ class BalloonField {
 	outputBalloons()
 	{
 		for(let i = 0; i < this.index; i++)
-		{
 			console.log(this.Balloons[i].coordinate[0] + " " + this.Balloons[i].coordinate[1] + " " + this.Balloons[i].coordinate[2]);
-		}
 		console.log((this.index) + " balloons total.");
 	}
 	
+	//If i < index, return the balloons DPV values, otherwise return -1.
 	getBalloon(i) {
 		if(i < this.index)
-		{
 			return new DPV(this.Balloons[i].coordinate[0], this.Balloons[i].coordinate[1], this.Balloons[i].coordinate[2]);
-		}
 		else
-		{
 			return -1;
-		}
 	}
 }
