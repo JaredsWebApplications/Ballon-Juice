@@ -13,6 +13,12 @@ var NUMBER_NODES = 40;
 let bot;
 let index = 0;
 
+var sample_matrix = [
+    [1, 1, 1],
+    [1, 1, 1],
+    [1, 1, 1]
+];
+
 function setup() {
 	
 	//Ensure we don't have too many nodes
@@ -37,6 +43,12 @@ function setup() {
     let bot = new Bot(origin);
 	makeField.floyd();
     makeField.traverseConnnections(0, bot, makeField.reconstruct(0, 1), 1);
+    text("FUCK YOU", 0, 100);
+
+    Display = new displayInterface();
+    Display.setup();
+    Display.draw(sample_matrix);
+
 	frameRate(1);
 }
 
