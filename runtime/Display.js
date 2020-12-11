@@ -34,7 +34,7 @@ function setup() {
 	//Display all nodes (will appear over the connections)
 	makeField.displayNodes();
     let origin = makeField.Balloons.Balloons[0];
-    let bot = new Bot(origin);
+    bot = new Bot(origin);
 	makeField.floyd();
     makeField.traverseConnnections(0, bot, makeField.reconstruct(0, 1), 1);
 	frameRate(1);
@@ -42,20 +42,43 @@ function setup() {
 
 let increasing = true;
 let success = true;
+
+let a_x;
+let a_y;
+let b_x;
+let b_y;
+
+let y_naught = 100;
+
 // Function called every frame
 function draw() {
-	success = makeField.displayBotMovement(index, increasing);
+    textSize(30);
+    success = makeField.displayBotMovement(index, increasing);
 	
 	//Travel the whole path, then return on the same path.
-	if(success && increasing)
+    if(success && increasing){
+        let [a, b] = makeField.pathTaken[index];
+        [a_x, a_y] = a;
+        [b_x, b_y] = b;
+        console.log(`(${a_y}) --> (${b_y})\n`, `Distance matrix slice (${a_y}): `, makeField.dist[a_y], '\n', `Next matrix slice  (${a_y}): `, makeField.next[a_y], '\n');
 		index++;
-	else if(success && !increasing && index > 0)
+    }
+    else if(success && !increasing && index > 0){
+        let [a, b] = makeField.pathTaken[index];
+        [a_x, a_y] = a;
+        [b_x, b_y] = b;
+        console.log(`(${a_y}) --> (${b_y})\n`, `Distance matrix slice (${a_y}): `, makeField.dist[a_y], '\n', `Next matrix slice  (${a_y}): `, makeField.next[a_y], '\n');
 		index--;
+    }
 	else if(increasing)
 	{
+        console.log("[+] Currently backtracking..");
 		increasing = false;
 		index--;
 	}
+    else if(!success){
+        text("UNLUCKY!", 1200, 500);
+    }
 	else
 		noLoop();
 }

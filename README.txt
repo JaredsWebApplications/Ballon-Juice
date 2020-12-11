@@ -61,7 +61,8 @@ root
 
 -   README.txt
 
--   Balloon-Juice.pdf
+-   RuntimeAnalysis.txt  | running time analysis of our project
+
 
 runtime
 -------
@@ -74,9 +75,6 @@ runtime
 
 -   backend/GenPoint.js | randomly generates balloons in the balloon
     field, ensuring they have proper DPV values
-
--   backend/Traversals.js | traversal algorithms that are used by the
-    bot
 
 -   graphics/Balloon.js | a balloon and balloon field class
     implementation that controls the graphical movement of the balloons
@@ -100,8 +98,9 @@ Installation and Running
 Known Bugs
 ==========
 
-Currently there are no known bugs to exist nor undesired program
-outcomes.
+Currently there are no known bugs to exist nor undesired program outcomes.
+However, we were not able to complete the table visualization of our Floyd-Warshal algorithm as there were several overlapping bugs and no time to address.
+Therefore we have printed the entire traversal through the console and can be examined there.
 
 Testing
 =======
