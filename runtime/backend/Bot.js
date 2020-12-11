@@ -17,5 +17,4 @@ class Bot {
         this.iterations++;
         this.didFindDestination(); // if it does
     }
-
 }
